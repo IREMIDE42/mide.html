@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ugochi ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+/* Sections */
+section{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-50px;
+    font-size:20px;
+    animation:floatUp 6s linear infinite;
+}
+@keyframes floatUp{
+    to{transform:translateY(-110vh);opacity:0;}
+}
+
+/* Name animation */
+h1 span{
+    opacity:0;
+    animation:fadeIn 0.5s forwards;
+}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* Buttons */
+button{
+    padding:15px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    background:white;
+    color:#ff6b81;
+    cursor:pointer;
+    margin-top:20px;
+    transition:0.3s;
+}
+button:hover{transform:scale(1.1);}
+
+/* Poem */
+.poem{
+    max-width:500px;
+    line-height:1.8;
+    font-size:18px;
+    background:rgba(255,255,255,0.15);
+    padding:25px;
+    border-radius:15px;
+}
+
+/* Game */
+#gameArea{
+    position:relative;
+    width:90vw;
+    height:60vh;
+    background:rgba(255,255,255,0.2);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.gameHeart{
+    position:absolute;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* Choice box (keeps NO inside screen) */
+#choiceBox{
+    position:relative;
+    width:300px;
+    height:200px;
+    margin-top:20px;
+}
+
+#choiceBox button{
+    position:absolute;
+}
+
+#yesBtn{left:30px;top:80px;}
+
+#noBtn{
+    left:160px;
+    top:80px;
+    background:#ff4d6d;
+    color:white;
+}
+
+/* YES glow */
+#yesBtn.glow{
+    animation:glow 1s infinite alternate;
+}
+@keyframes glow{
+    from{box-shadow:0 0 10px white;}
+    to{box-shadow:0 0 25px #fff,0 0 40px #ff6b81;}
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation:fall linear forwards;
+}
+@keyframes fall{
+    to{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<section>
+<h1 id="name"></h1>
+<p>A little surprise made just for you.</p>
+<button onclick="scrollToSection('message')">Open ❤️</button>
+</section>
+
+<!-- MESSAGE -->
+<section id="message">
+<h2>Hi Ugochi 💕</h2>
+<p>
+Even though we’re miles apart,<br>
+you’re still the best part of my day.<br><br>
+So I made this little space<br>
+where distance doesn’t matter.
+</p>
+<button onclick="scrollToSection('poem')">Continue 😌</button>
+</section>
+
+<!-- POEM -->
+<section id="poem">
+<h2>Before You Go Further…</h2>
+
+<p class="poem">
+You claim you don’t like people,<br>
+You avoid them like morning alarms.<br>
+Always forming small attitude,<br>
+Like the world must beg for your charms.<br><br>
+
+Stubborn? Yes.<br>
+Difficult? Sometimes.<br>
+But somehow, inside all that your wahala,<br>
+You still became mine.<br><br>
+I annoy you, vex you frustrate you,<br>
+Yet you stay, you laugh, you’re always there.<br><br>
+
+So maybe you don’t like everybody — that’s true.<br>
+But I’m lucky… because you chose me too. ❤️
+</p>
+
+<button onclick="startGame()">Next up the only game i can program 😭😭</button>
+</section>
+
+<!-- GAME -->
+<section id="game">
+<h2>CatCH The hearts 💘</h2>
+<h3 id="score">0 / 10</h3>
+<div id="gameArea"></div>
+</section>
+
+<!-- FINAL -->
+<section id="final">
+<h2>You Caught All the hearts hmmm🧐 easy right😭 ❤️</h2>
+<p>Will you be my Valentine again?</p>
+
+<div id="choiceBox">
+<button id="yesBtn" onclick="celebrate()">YES 💖</button>
+<button id="noBtn">NO 😢</button>
+</div>
+</section>
+
+<script>
+/* Animate Name */
+const name="Ugochi ❤️";
+const container=document.getElementById("name");
+name.split("").forEach((l,i)=>{
+    const span=document.createElement("span");
+    span.textContent=l;
+    span.style.animationDelay=i*0.2+"s";
+    container.appendChild(span);
+});
+
+/* Floating Hearts */
+setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.style.left=Math.random()*100+"vw";
+    heart.textContent="💗";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+},400);
+
+/* Scroll */
+function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+/* Game */
+let score=0;
+function startGame(){
+    scrollToSection('game');
+    spawnHeart();
+}
+
+function spawnHeart(){
+    if(score>=10){
+        scrollToSection('final');
+        return;
+    }
+
+    const heart=document.createElement("div");
+    heart.className="gameHeart";
+    heart.textContent="💖";
+
+    heart.style.top=Math.random()*80+"%";
+    heart.style.left=Math.random()*80+"%";
+
+    heart.onclick=()=>{
+        score++;
+        document.getElementById("score").innerText=score+" / 10";
+        heart.remove();
+        spawnHeart();
+    };
+
+    document.getElementById("gameArea").appendChild(heart);
+}
+
+/* NO button behaviour */
+let noClicks=0;
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseenter",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+function moveNo(){
+    const box=document.getElementById("choiceBox");
+
+    const maxX=box.clientWidth-noBtn.offsetWidth;
+    const maxY=box.clientHeight-noBtn.offsetHeight;
+
+    noBtn.style.left=Math.random()*maxX+"px";
+    noBtn.style.top=Math.random()*maxY+"px";
+
+    noClicks++;
+
+    if(noClicks==1) noBtn.innerText="Ugochi wait 😂";
+    else if(noClicks==2) noBtn.innerText="Why are you like this 😭";
+    else if(noClicks==3) noBtn.innerText="So stubborn 😤";
+    else if(noClicks==4) noBtn.innerText="You don't even like people 😭";
+    else if(noClicks==5) noBtn.innerText="But you like me sha 💕";
+    else if(noClicks>=6){
+        noBtn.style.display="none";
+        triggerLoveWin();
+    }
+}
+
+/* Confetti surrender */
+function triggerLoveWin(){
+    document.getElementById("yesBtn").classList.add("glow");
+
+    const msg=document.createElement("h3");
+    msg.innerText="I knew you loved me too much to say no ❤️";
+    document.getElementById("final").appendChild(msg);
+
+    for(let i=0;i<120;i++) createConfetti();
+}
+
+function createConfetti(){
+    const c=document.createElement("div");
+    c.className="confetti";
+
+    const colors=["#ff6b81","#ffd93d","#6bcBef","#ffffff"];
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDuration=(Math.random()*3+2)+"s";
+
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+}
+
+function celebrate(){
+    alert("Happy Valentine's Day My Love ❤️");
+}
+</script>
+
+</body>
+</html>
