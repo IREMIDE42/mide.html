@@ -262,27 +262,33 @@ heart.style.animationDuration = (Math.random()*2 + 2) + "s";
 }
 
 /* NO button behaviour */
-let noClicks=0;
-const noBtn=document.getElementById("noBtn");
+let noClicks = 0;
 
-noBtn.addEventListener("mouseenter",moveNo);
-noBtn.addEventListener("click",moveNo);
+function handleNoPress(e){
+    e.preventDefault(); // prevents double triggering on phones
 
-function moveNo(){
-    const box=document.getElementById("choiceBox");
+    const box = document.getElementById("choiceBox");
+    const btn = document.getElementById("noBtn");
+    // Works for both phone and laptop
+noBtn.addEventListener("touchstart", handleNoPress);
+noBtn.addEventListener("click", handleNoPress);
+    
 
-    const maxX=box.clientWidth-noBtn.offsetWidth;
-    const maxY=box.clientHeight-noBtn.offsetHeight;
+    const maxX = box.clientWidth - btn.offsetWidth;
+    const maxY = box.clientHeight - btn.offsetHeight;
 
-    noBtn.style.left=Math.random()*maxX+"px";
-    noBtn.style.top=Math.random()*maxY+"px";
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    btn.style.left = randomX + "px";
+    btn.style.top = randomY + "px";
 
     noClicks++;
 
-    if(noClicks==1) noBtn.innerText="Ugochi wait 😂";
-    else if(noClicks==2) noBtn.innerText="Why are you like this 😭";
-    else if(noClicks==3) noBtn.innerText="So stubborn 😤";
-    else if(noClicks==4) noBtn.innerText="just pick yes 😭";
+    if(noClicks==1) noBtn.innerText="uhmm hope it's a mistake😂";
+    else if(noClicks==2) noBtn.innerText="lets be guided ooo 😭";
+    else if(noClicks==3) noBtn.innerText="PICK YES NOW 😤";
+    else if(noClicks==4) noBtn.innerText="Abeg na 😭";
     else if(noClicks==5) noBtn.innerText="chaii you have no choice sha 💕";
     else if(noClicks>=6){
         noBtn.style.display="none";
