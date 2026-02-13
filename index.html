@@ -121,11 +121,15 @@ button:hover{transform:scale(1.1);}
     height:10px;
     top:-10px;
     animation:fall linear forwards;
-}
 @keyframes fall{
-    to{transform:translateY(110vh) rotate(720deg);opacity:0;
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
 }
-    @keyframes moveAround {
+
+/* Moving hearts animation */
+@keyframes moveAround {
     0%   { transform: translate(0,0); }
     25%  { transform: translate(40px,-60px); }
     50%  { transform: translate(-30px,40px); }
@@ -136,6 +140,7 @@ button:hover{transform:scale(1.1);}
 .moving {
     animation: moveAround 3s infinite ease-in-out;
 }
+
 </style>
 </head>
 
@@ -263,15 +268,18 @@ heart.style.animationDuration = (Math.random()*2 + 2) + "s";
 
 /* NO button behaviour */
 let noClicks = 0;
+    const noBtn = document.getElementById("noBtn");
+
+// Make it work on phones + laptops
+noBtn.addEventListener("touchstart", handleNoPress);
+noBtn.addEventListener("click", handleNoPress);
 
 function handleNoPress(e){
     e.preventDefault(); // prevents double triggering on phones
 
     const box = document.getElementById("choiceBox");
     const btn = document.getElementById("noBtn");
-    // Works for both phone and laptop
-noBtn.addEventListener("touchstart", handleNoPress);
-noBtn.addEventListener("click", handleNoPress);
+    
     
 
     const maxX = box.clientWidth - btn.offsetWidth;
